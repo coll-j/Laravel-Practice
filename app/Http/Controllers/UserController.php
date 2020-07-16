@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
 
 class UserController extends Controller
 {
@@ -10,9 +11,9 @@ class UserController extends Controller
         User::create([
             'username' => $request->username,
             'password' => $request->password,
-            'admin_flag' => 0
-        ]);
-        
-        return;
+            'admin_flag' => false
+            ]);
+            
+        return redirect()->back();
     }
 }
