@@ -81,13 +81,10 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Log in
+                    Sign Up
                 </div>
-                @if(session('alert'))
-                <h4>{{ session('alert') }}</h4>
-                @endif
 
-                <form method="POST" action="{{ route('login') }}" class="form">
+                <form method="POST" action="{{ route('add_user') }}" class="form">
                     @csrf
                     <div class="form-group">
                         <label>Username</label>
@@ -97,9 +94,8 @@
                         <label>Password</label>
                         <input type="password" name="password" class="form-control">
                     </div>
-                    <input type="submit" value="log in">
+                    <input type="submit" value="add user">
                 </form>
-                <a href="{{ route('sign_up') }}">Sign up</a>
             </div>
         </div>
     </body>
