@@ -18,6 +18,7 @@ class CreateAnswersTable extends Migration
             $table->unsignedBigInteger('id_query');
             $table->string('username');
             $table->mediumText('body');
+            $table->boolean('approved');
             $table->timestamps();
         });
     }
