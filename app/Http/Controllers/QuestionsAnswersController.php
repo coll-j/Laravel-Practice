@@ -5,16 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Questions;
+use App\Answers;
 
-class QuestionsController extends Controller
+class QuestionsAnswersController extends Controller
 {
-    public function index () {
+    public function indexQuestion () {
         $username = session()->get('username');
         $questions = Questions::where('username', $username)->orderBy('created_at', 'desc')->get();
         return view('questions', compact('questions'));
     }
 
-    public function insert (Request $request) {
+    public function insertQuestion (Request $request) {
         Questions::create([
             'username' => $request->username,
             'title' => $request->title,
@@ -24,12 +25,22 @@ class QuestionsController extends Controller
         return redirect('home');
     }
 
-    public function edit ($id) {
+    public function insertAnswer (Request $request) {
+        Answers::create([
+            'id_query' => $request->id_query,
+            'username' => $request->username,
+            'body' => $request->body
+        ]);
+        
+        return;
+    }
+
+    public function editQuestion ($id) {
         $question = Questions::find($id);
         return view('ask', compact('question'));
     }
 
-    public function editPut (Request $request) {
+    public function editPutQuestion (Request $request) {
         Questions::find($request->id)->update([
             'title' => $request->title,
             'body' => $request->body
