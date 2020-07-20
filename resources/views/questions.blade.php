@@ -16,7 +16,7 @@
         <td>{{ $question->title }}</td>
         <td>{{ $question->created_at }}</td>
         <td>
-            <a href="#">View</a>
+            <a href="{{ route('view' , $question->id)}}">View</a>
             <a href="{{ route('edit_question', $question->id) }}">Edit</a>
             <a href="#">Delete</a>
         </td>
