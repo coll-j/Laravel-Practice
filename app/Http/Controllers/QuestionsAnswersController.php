@@ -48,9 +48,9 @@ class QuestionsAnswersController extends Controller
         return view('home');
     }
 
-    public function show ($id) {
+     public function show ($id) {
         $flag = Questions::where('id', $id)->get();
-        return view('view',compact('flag'));
-    } 
+         return view('view',compact('flag'));
+     } 
     
 }

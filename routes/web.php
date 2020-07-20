@@ -42,4 +42,4 @@ Route::get('logout', 'UserController@logout')->name('logout');
 Route::get('questions', 'QuestionsAnswersController@indexQuestion')->name('questions');
 Route::get('edit_question/{id}', 'QuestionsAnswersController@editQuestion')->name('edit_question');
 
-Route::get('view', 'QuestionsAnswersController@show')->name('view');
+Route::get('view/{id}', 'QuestionsAnswersController@show')->name('view');
