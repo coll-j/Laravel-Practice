@@ -2,8 +2,9 @@
 <html>
 <head></head>
 <body>
-<h1>Home</h1>
+<h1>Search</h1>
 <div>
+    <a href="{{ route('home') }}">Home</a> | 
     <a href="{{ route('ask') }}">Ask Question</a> | 
     <a href="{{ route('questions') }}">My Questions</a> | 
     <a href="{{ route('logout') }}">Log out</a> | 

@@ -24,7 +24,7 @@ class UserController extends Controller
         if($data) {
             if(Hash::check($request->password, $data->password)) {
                 Session::put('username', $data->username);
-                return view('home');
+                return redirect()->route('home');
             }
             else {
                 return redirect()->back()->with('alert', 'wrong password');

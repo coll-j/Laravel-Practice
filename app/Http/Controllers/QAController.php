@@ -7,12 +7,22 @@ use Illuminate\Http\Request;
 use App\Questions;
 use App\Answers;
 
-class QuestionsAnswersController extends Controller
+class QAController extends Controller
 {
-    public function indexQuestion () {
+    public function userQuestions () {
         $username = session()->get('username');
         $questions = Questions::where('username', $username)->orderBy('created_at', 'desc')->get();
         return view('questions', compact('questions'));
+    }
+
+    public function allQuestions() {
+        $questions = Questions::orderBy('created_at', 'desc')->paginate(3); // paginasi, berapa item per page
+        return view('home', ['questions' => $questions]);
+    }
+
+    public function filterQuestionsByName(Request $request) {
+        $questions = Questions::where('title', 'like', '%' . $request->string . '%')->paginate(3);
+        return view('search', ['questions' => $questions]);
     }
 
     public function insertQuestion (Request $request) {

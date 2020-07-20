@@ -21,20 +21,20 @@ Route::get('sign_up', function () {
     return view('signup');
 })->name('sign_up');
 
-Route::get('home', function () {
-    return view('home');
-})->name('home');
-
 Route::get('ask', function () {
     return view('ask');
 })->name('ask');
 
 Route::post('add_user', 'UserController@insert')->name('add_user');
-Route::post('add_question', 'QuestionsAnswersController@insertQuestion')->name('add_question');
-Route::put('update_question', 'QuestionsAnswersController@editPutQuestion')->name('update_question');
-Route::post('add_answer', 'QuestionsAnswersController@insertAnswer')->name('add_answer');
+Route::post('add_question', 'QAController@insertQuestion')->name('add_question');
+Route::post('add_answer', 'QAController@insertAnswer')->name('add_answer');
 Route::post('login', 'UserController@loginPost')->name('login');
 
+Route::put('update_question', 'QAController@editPutQuestion')->name('update_question');
+
 Route::get('logout', 'UserController@logout')->name('logout');
-Route::get('questions', 'QuestionsAnswersController@indexQuestion')->name('questions');
-Route::get('edit_question/{id}', 'QuestionsAnswersController@editQuestion')->name('edit_question');
+Route::get('questions', 'QAController@userQuestions')->name('questions');
+Route::get('all_questions', 'QAController@allQuestions');
+Route::get('edit_question/{id}', 'QAController@editQuestion')->name('edit_question');
+Route::get('home', 'QAController@allQuestions')->name('home');
+Route::get('search/', 'QAController@filterQuestionsByName')->name('search_question');
