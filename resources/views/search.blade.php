@@ -16,6 +16,7 @@
 <table>
 <thead>
     <th>Title</th>
+    <th>Posted by</th>
     <th>Posted at</th>
     <th></th>
 </thead>
@@ -23,6 +24,7 @@
     @foreach($questions as $question)
     <tr>
         <td>{{ $question->title }}</td>
+        <td>{{ $question->username }}</td>
         <td>{{ $question->created_at }}</td>
         <td>
             <a href="#">View</a>
