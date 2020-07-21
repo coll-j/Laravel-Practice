@@ -26,12 +26,18 @@ Route::get('ask', function () {
     return view('ask');
 })->name('ask');
 
+Route::get('changepass', function () {
+    return view('changepass');
+})->name('changepass');
+
 Route::post('add_user', 'UserController@insert')->name('add_user');
 Route::post('add_question', 'QAController@insertQuestion')->name('add_question');
 Route::post('add_answer', 'QAController@insertAnswer')->name('add_answer');
 Route::post('login', 'UserController@loginPost')->name('login');
 Route::post('delete_answer/{id}','QAController@deleteAnswer')->name('delete_answer');
+Route::post('find_user','UserController@changeCheckUser')->name('find_user');
 
+Route::put('update_pass','UserController@updatePassword')->name('update_pass');
 Route::put('update_question', 'QAController@editPutQuestion')->name('update_question');
 
 Route::get('logout', 'UserController@logout')->name('logout');
@@ -44,5 +50,3 @@ Route::get('home', 'QAController@allQuestions')->name('home');
 Route::get('search/', 'QAController@filterQuestionsByName')->name('search_question');
 Route::get('view/{id}', 'QAController@show')->name('view');
 Route::get('questions/{id}','QAController@deleteQuestion')->name('delete_question');
-
-

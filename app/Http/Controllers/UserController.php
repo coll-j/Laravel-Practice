@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
+
 use App\User;
 
 class UserController extends Controller
@@ -19,13 +21,39 @@ class UserController extends Controller
         return redirect('/');
     }
 
+    public function findUser($username) {
+        $data = User::where('username', $username)->first();
+        if($data) return $data;
+        else return;
+    }
+
+    public function changeCheckUser(Request $request){
+        $data = self::findUser($request->username);
+        if($data) 
+        {
+            $username = $data->username;
+            return view('changepass', compact('username'));
+        }
+        else return redirect()->route('changepass')->with('alert', 'username not found');
+    }
+
+    public function updatePassword (Request $request) {
+        User::where('username', $request->username)->first()->update([
+            'password' => Hash::make($request->password)
+        ]);
+        return redirect('/');
+    }
+
     public function loginPost(Request $request) {
-        $data = User::where('username', $request->username)->first();
+        $data = self::findUser($request->username);
         if($data) {
             if(Hash::check($request->password, $data->password)) {
                 Session::put('username', $data->username);
                 Session::put('id', $data->id);
-                return redirect()->route('home');
+                $credentials = $request->only('username', 'password');
+                if (Auth::attempt($credentials)) {
+                    return redirect()->route('home');
+                }
             }
             else {
                 return redirect()->back()->with('alert', 'wrong password');
@@ -34,13 +62,6 @@ class UserController extends Controller
         else {
             return redirect()->back()->with('alert', 'username not found');
         }
-    }
-
-    public function updatePassword (Request $request) {
-        Users::find($request->id)->update([
-            'password' => Hash::make($request->password)
-        ]);
-        return view('/');
     }
 
     public function logout() {

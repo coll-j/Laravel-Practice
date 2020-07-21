@@ -15,20 +15,6 @@
     </head>
     <body>
         <div class="flex-center position-abs in-center">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif
-
             <div class="card card-shadow">
                 <div class="title">
                     Sign up
@@ -37,8 +23,8 @@
                 <form method="POST" action="{{ route('add_user') }}">
                     @csrf
                     <hr>
-                    <input type="text" class="form-control" name="username" placeholder="Username" required />
-                    <input type="password" class="form-control" name="password" placeholder="Password" required />
+                    <input type="text" class="form-control mb-2" name="username" placeholder="Username" required />
+                    <input type="password" class="form-control mb-2" name="password" placeholder="Password" required />
                     <br>
                     <input type="submit" name="submit" value="Sign up" class="col btn btn-primary"/> 
                 </form>
