@@ -9,4 +9,5 @@ class Answers extends Model
     protected $fillable = [
         'id_query', 'username', 'body'
     ];
+
 }

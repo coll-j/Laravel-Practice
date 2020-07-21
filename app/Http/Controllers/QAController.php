@@ -45,6 +45,11 @@ class QAController extends Controller
         return;
     }
 
+ //   public function editAnswer ($id) {
+ //       $answer = Answers::find($id);
+ //       return view('view', compact('answer'));
+ //   }
+
     public function editQuestion ($id) {
         $question = Questions::find($id);
         return view('ask', compact('question'));
@@ -63,4 +68,10 @@ class QAController extends Controller
         Questions::find($request->id)->delete($request->id);
         return redirect()->back();
     }
+
+  //  public function deleteAnswer (Request $request)
+  //  {
+  //      Answers::find($request->id)->delete($request->id);
+  //      return redirect()->back();
+  //  }
 }

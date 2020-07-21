@@ -35,6 +35,8 @@ class QuestionsAnswersController extends Controller
         return;
     }
 
+   
+
     public function editQuestion ($id) {
         $question = Questions::find($id);
         return view('ask', compact('question'));

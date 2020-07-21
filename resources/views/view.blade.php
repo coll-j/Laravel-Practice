@@ -52,6 +52,27 @@
             </div>
             @endforeach
         </div>
+        
+        <h2>Answer</h2>
+        <form method="POST" action="{{ isset($answer)? route('edit_answer') : route('add_answer') }}" class="form">
+        
+        @csrf
+       
+        <div class="form-group">
+            
+            <input type="hidden" name="id_query" class="form-control" value="{{ $question->id }}">
+        </div>
+       
+        <div class="form-group">
+            <input type="hidden" name="username" class="form-control" value="{{ Session::get('username') }}">
+        </div>
+        
+        <textarea rows="6" name="Answer" class="form-control">{{ $answers->body ?? ''}}</textarea>
+         <input type="submit" value="Submit Answer">
+         
+         
+        </form> 
+        
     </section>
 </body>
 </html>
