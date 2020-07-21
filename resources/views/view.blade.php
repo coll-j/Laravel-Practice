@@ -37,7 +37,6 @@
     <section id="home">
         <div class="container m-con" data-aos="zoom-in" data-aos-delay="100">
             <h1>Viewed Question</h1>
-            @foreach($flag as $question)
             <div class="row">
                 <div class="card">
                     <div class="card-body">
@@ -50,7 +49,7 @@
                     </div>
                 </div>
             </div>
-            @endforeach
+            
         </div>
         
         <h2>Answer</h2>
@@ -67,12 +66,35 @@
             <input type="hidden" name="username" class="form-control" value="{{ Session::get('username') }}">
         </div>
         
-        <textarea rows="6" name="body" class="form-control">{{ $answers->body ?? ''}}</textarea>
+        <textarea rows="6" name="body" class="form-control" >{{ $answers->body ?? ''}}</textarea>
          <input type="submit" value="Submit Answer">
          
-         
         </form> 
-        
+        <!--Show Answer -->
+        <h1>Show Answer</h1>
+       @isset($showanswers)
+            @foreach($showanswers ?? '' as $jawab)
+            <form>
+            <input type="hidden" name="id_query" class="form-control" value="{{ $jawab->id }}">
+            <div class="row">
+                <div class="card">
+                    <div class="card-body">
+                       
+                        <p class="card-text">{{ $jawab->body }}</p>
+                        <a class="btn btn-outline-dark float-right fa fa-user"><span class="nunito">  {{ $jawab->username }}</span></a>
+                       <a href="{{ route('edit_answer',['id'=> $jawab->id, 'id_query'=> $jawab->id_query]) }}"><i class='fa fa-pencil'></i></a>
+                        <a href="{{ route('delete_answer', $jawab->id) }}"><i class='fa fa-trash'></i></a>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted">Post on {{ $jawab->created_at }}</small>
+                        
+                    </div>
+                </div>
+            </div>
+            </form>
+          @endforeach
+            @endisset
+
     </section>
 </body>
 </html>
