@@ -36,7 +36,6 @@ class QAController extends Controller
     }
 
     public function insertAnswer (Request $request) {
-        return $request;
         Answers::create([
             'id_query' => $request->id_query,
             'username' => $request->username,
