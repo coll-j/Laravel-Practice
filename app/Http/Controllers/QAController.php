@@ -36,15 +36,20 @@ class QAController extends Controller
     }
 
     public function insertAnswer (Request $request) {
+        return $request;
         Answers::create([
             'id_query' => $request->id_query,
             'username' => $request->username,
             'body' => $request->body
         ]);
         
-        return;
+        return redirect()->back();
     }
 
+    public function show ($id) {
+        $flag = Questions::where('id', $id)->get();
+         return view('view',compact('flag'));
+    } 
  //   public function editAnswer ($id) {
  //       $answer = Answers::find($id);
  //       return view('view', compact('answer'));

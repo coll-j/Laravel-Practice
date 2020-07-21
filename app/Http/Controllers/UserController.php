@@ -24,6 +24,7 @@ class UserController extends Controller
         if($data) {
             if(Hash::check($request->password, $data->password)) {
                 Session::put('username', $data->username);
+                Session::put('id', $data->id);
                 return redirect()->route('home');
             }
             else {
@@ -33,6 +34,13 @@ class UserController extends Controller
         else {
             return redirect()->back()->with('alert', 'username not found');
         }
+    }
+
+    public function updatePassword (Request $request) {
+        Users::find($request->id)->update([
+            'password' => Hash::make($request->password)
+        ]);
+        return view('/');
     }
 
     public function logout() {

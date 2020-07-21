@@ -10,4 +10,7 @@ class Answers extends Model
         'id_query', 'username', 'body'
     ];
 
+    protected $attributes = [
+        'approved' => false
+    ];
 }

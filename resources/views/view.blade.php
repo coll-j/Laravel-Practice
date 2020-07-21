@@ -37,7 +37,7 @@
     <section id="home">
         <div class="container m-con" data-aos="zoom-in" data-aos-delay="100">
             <h1>Viewed Question</h1>
-            @foreach($flag ?? '' as $question)
+            @foreach($flag as $question)
             <div class="row">
                 <div class="card">
                     <div class="card-body">
@@ -67,7 +67,7 @@
             <input type="hidden" name="username" class="form-control" value="{{ Session::get('username') }}">
         </div>
         
-        <textarea rows="6" name="Answer" class="form-control">{{ $answers->body ?? ''}}</textarea>
+        <textarea rows="6" name="body" class="form-control">{{ $answers->body ?? ''}}</textarea>
          <input type="submit" value="Submit Answer">
          
          
