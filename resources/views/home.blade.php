@@ -10,6 +10,25 @@
     <!-- Styles -->
     <link rel="shortcut icon" href="{{ asset('img/favicon.png') }}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+    <style>
+        .stretched-link::after {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 1;
+            pointer-events: auto;
+            content: "";
+            background-color: rgba(0,0,0,0);
+        }
+
+        .row .card .card-body:hover {
+            background-color: lightgrey;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar sticky-top navbar-expand-lg bg-dark navbar-dark">
@@ -41,18 +60,20 @@
             <h1>Home</h1>
             @foreach($questions ?? '' as $question)
             <div class="row">
+                <!-- <a href="{{ route('view' , $question->id)}}" style="color: #636b6f;"> -->
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">{{ $question->title }}</h5>
                         <p class="card-text">{{ $question->body }}</p>
-                        <a href="{{ route('view' , $question->id)}}" class="btn btn-primary float-right">View</a>
+                        <a href="{{ route('view' , $question->id)}}" class="btn btn-primary float-right stretched-link">View</a>
                     </div>
                     <div class="card-footer">
                         <small class="text-muted">By {{ $question->username }}</small>
                         <small>•</small>
-                        <small class="text-muted">Post on {{ $question->created_at }}</small>
+                        <small class="text-muted">Posted at {{ $question->created_at }}</small>
                     </div>
                 </div>
+                <!-- </a> -->
             </div>
             @endforeach
         </div>

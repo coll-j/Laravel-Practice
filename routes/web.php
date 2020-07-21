@@ -39,5 +39,5 @@ Route::get('all_questions', 'QAController@allQuestions');
 Route::get('edit_question/{id}', 'QAController@editQuestion')->name('edit_question');
 Route::get('home', 'QAController@allQuestions')->name('home');
 Route::get('search/', 'QAController@filterQuestionsByName')->name('search_question');
-Route::get('view/{id}', 'QuestionsAnswersController@show')->name('view');
+Route::get('view/{id}', 'QAController@show')->name('view');
 Route::get('questions/{id}','QAController@deleteQuestion')->name('delete_question');

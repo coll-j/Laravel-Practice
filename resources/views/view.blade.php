@@ -46,7 +46,7 @@
                         <a class="btn btn-outline-dark float-right fa fa-user"><span class="nunito">  {{ $question->username }}</span></a>
                     </div>
                     <div class="card-footer">
-                        <small class="text-muted">Post on {{ $question->created_at }}</small>
+                        <small class="text-muted">Posted at {{ $question->created_at }}</small>
                     </div>
                 </div>
             </div>

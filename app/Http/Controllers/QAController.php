@@ -9,6 +9,12 @@ use App\Answers;
 
 class QAController extends Controller
 {
+    public function show ($id) {
+        $flag = Questions::where('id', $id)->get();
+        $showanswers = Answers::where('id_query', $flag->id)->get();
+        return view('view',compact('flag', 'showanswers'));
+    }
+
     public function userQuestions () {
         $username = session()->get('username');
         $questions = Questions::where('username', $username)->orderBy('created_at', 'desc')->get();
