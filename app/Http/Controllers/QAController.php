@@ -57,4 +57,10 @@ class QAController extends Controller
         ]);
         return view('home');
     }
+
+    public function deleteQuestion (Request $request)
+    {
+        Questions::find($request->id)->delete($request->id);
+        return redirect()->back();
+    }
 }

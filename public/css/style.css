@@ -1,0 +1,144 @@
+/* =================================================================== 
+ *  Questioner v1.0 Stylesheet
+ *  20-07-2020
+ * =================================================================== */
+
+html, body {
+  background-color: #ffffff;
+  color: #636b6f;
+  font-family: 'Nunito', sans-serif !important;;
+  font-weight: 200;
+  height: 100%;
+  margin: 0;
+}
+
+.full-height {
+  height: 100vh;
+}
+
+#home {
+  margin-bottom: 60px;
+}
+
+/* ------------------------------------------------------------------- 
+ * Navigation Bar
+ * ------------------------------------------------------------------- */
+ .nav-item {
+  text-transform: uppercase;
+  font-size: small;
+}
+
+nav .nav-item a, nav .nav-item a:visited {
+  color: #ffffff;
+}
+nav .nav-item a:hover, nav .nav-item a:focus {
+  color: #007bff !important;
+}
+
+.navbar {
+  height: 64px;
+}
+
+/* ------------------------------------------------------------------- 
+ * Card
+ * ------------------------------------------------------------------- */
+.card-shadow {
+  padding-top: 32px;
+  padding-bottom: 32px;
+  padding-right: 48px;
+  padding-left: 48px;
+  text-align: center;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.row .card {
+  margin-top: 10px;
+  width: 100%;
+  min-width: 100%;
+}
+
+/* ------------------------------------------------------------------- 
+ * Title & Font
+ * ------------------------------------------------------------------- */
+.container h1 {
+  font-size: 42px;
+  font-weight: 700;
+  line-height: 56px;
+  text-transform: uppercase;
+  color: #007bff;
+}
+
+.title {
+  font-size: 36px;
+}
+
+.form-group label {
+  font-weight: 800;
+  font-size: larger;
+}
+
+
+.nunito {
+  font-family: 'Nunito', sans-serif;
+}
+
+.links > a {
+  color: #636b6f;
+  padding: 0 25px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .1rem;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.less {
+  color: #636b6f;
+}
+
+/* ------------------------------------------------------------------- 
+ * Position 
+ * ------------------------------------------------------------------- */
+.flex-center {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column; 
+}
+
+.position-ref {
+  position: relative;
+}
+
+.position-abs {
+  position: absolute;
+}
+
+.col-form-label{
+  margin-top: 10px;
+}
+
+.top-right {
+  position: absolute;
+  right: 10px;
+  top: 18px;
+}
+
+.content {
+  text-align: center;
+}
+
+.in-center {
+  bottom: 0; 
+  top: 0;  
+  left: 0; 
+  right: 0;
+}
+
+.m-con{
+  margin-top: 60px;
+}
+
+.btn {
+  margin-bottom: 10px;
+}
