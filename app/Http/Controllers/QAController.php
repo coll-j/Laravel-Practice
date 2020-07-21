@@ -42,13 +42,19 @@ class QAController extends Controller
             'body' => $request->body
         ]);
         
-        return;
+        return redirect()->back();
     }
 
- //   public function editAnswer ($id) {
- //       $answer = Answers::find($id);
- //       return view('view', compact('answer'));
- //   }
+    public function editAnswer ($id, $id_query) {
+        $answer = Answers::find($id, $id_query);
+        return view('view', [$id => $id_query]);
+    }
+
+    public function deleteAnswer (Request $request)
+    {
+        Answers::find($request->id)->delete($request->id);
+        return redirect()->back();
+    }
 
     public function editQuestion ($id) {
         $question = Questions::find($id);
@@ -69,9 +75,11 @@ class QAController extends Controller
         return redirect()->back();
     }
 
-  //  public function deleteAnswer (Request $request)
-  //  {
-  //      Answers::find($request->id)->delete($request->id);
-  //      return redirect()->back();
-  //  }
+    public function show ($id) {
+        $question = Questions::where('id', $id)->first();
+        $showanswers = Answers::where('id_query', $question->id)->get();
+         return view('view',compact('question','showanswers'));
+     } 
+
+ 
 }
