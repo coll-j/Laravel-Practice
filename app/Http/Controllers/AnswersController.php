@@ -16,4 +16,5 @@ class AnswersController extends Controller
         
         return;
     }
+
 }
