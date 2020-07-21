@@ -60,7 +60,6 @@
             <h1>Home</h1>
             @foreach($questions ?? '' as $question)
             <div class="row">
-                <!-- <a href="{{ route('view' , $question->id)}}" style="color: #636b6f;"> -->
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">{{ $question->title }}</h5>
@@ -73,7 +72,6 @@
                         <small class="text-muted">Posted at {{ $question->created_at }}</small>
                     </div>
                 </div>
-                <!-- </a> -->
             </div>
             @endforeach
         </div>

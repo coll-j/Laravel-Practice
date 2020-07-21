@@ -11,8 +11,7 @@ class QAController extends Controller
 {
     public function show ($id) {
         $flag = Questions::where('id', $id)->get();
-        $showanswers = Answers::where('id_query', $flag->id)->get();
-        return view('view',compact('flag', 'showanswers'));
+        return view('view', compact('flag'));
     }
 
     public function userQuestions () {
