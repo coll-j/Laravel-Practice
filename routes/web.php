@@ -30,12 +30,13 @@ Route::post('add_user', 'UserController@insert')->name('add_user');
 Route::post('add_question', 'QAController@insertQuestion')->name('add_question');
 Route::post('add_answer', 'QAController@insertAnswer')->name('add_answer');
 Route::post('login', 'UserController@loginPost')->name('login');
-Route::post('view/{id}','QAController@deleteAnswer')->name('delete_answer');
+Route::post('delete_answer/{id}','QAController@deleteAnswer')->name('delete_answer');
 
 Route::put('update_question', 'QAController@editPutQuestion')->name('update_question');
 
 Route::get('logout', 'UserController@logout')->name('logout');
 Route::get('questions', 'QAController@userQuestions')->name('questions');
+Route::get('answers', 'QAController@userAnswers')->name('answers');
 Route::get('all_questions', 'QAController@allQuestions');
 Route::get('edit_question/{id}', 'QAController@editQuestion')->name('edit_question');
 Route::get('edit_answer/{id}/{id_query}', 'QAController@editAnswer')->name('edit_answer');

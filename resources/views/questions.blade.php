@@ -10,6 +10,12 @@
     <!-- Styles -->
     <link rel="shortcut icon" href="{{ asset('img/favicon.png') }}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+    <style>
+        .clickable:hover { 
+            cursor: pointer;
+        } 
+    </style>
 </head>
 <body>
     <nav class="navbar sticky-top navbar-expand-lg bg-dark navbar-dark">
@@ -25,13 +31,20 @@
                     <li class="nav-item active"><a class="nav-link" href="{{ route('home') }}">Home</a></li>
                     <li class="nav-item active"><a class="nav-link" href="{{ route('ask') }}">Ask</a></li>
                     <li class="nav-item active"><a class="nav-link" href="{{ route('questions') }}">MyQuest</a></li>
-                    <li class="nav-item active"><a class="nav-link" href="{{ route('logout') }}">Logout</a></li>
+                    <li class="nav-item active"><a class="nav-link" href="{{ route('answers') }}">MyAns</a></li>
                 </ul>
             </div>
-            <form method="GET" action="{{ route('search_question') }}" class="form-inline my-2 my-lg-0 ml-auto">
-                <input class="form-control mr-sm-2" type="text" name="string"  placeholder="Search"> 
-                <button class="btn btn-primary fa fa-search my-2 my-sm-0" type="submit"></button>
-            </form>
+            <div>
+                <div class="d-inline-block">
+                    <form method="GET" action="{{ route('search_question') }}" class="form-inline my-2 my-lg-0 ml-auto">
+                        <input class="form-control mr-sm-2" type="text" name="string"  placeholder="Search"> 
+                        <button class="btn btn-primary fa fa-search my-2 my-sm-0" type="submit"></button>
+                    </form>
+                </div>
+                <div class="d-inline-block">
+                    <a class="nav-link fa fa-sign-out" href="{{ route('logout') }}" style="font-size: 150%;"></a>
+                </div>
+            </div>
         </div>
     </nav>
     <div class="container m-con">
@@ -47,7 +60,7 @@
         </thead>
         <tbody>
             @foreach($questions as $question)
-            <tr>
+            <tr class="clickable" onclick="window.location='{{ route('view' , $question->id)}}'">
                 <td>{{ $question->title }}</td>
                 <td>{{ $question->created_at }}</td>
                 <td>

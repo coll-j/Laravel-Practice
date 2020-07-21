@@ -10,6 +10,12 @@
     <!-- Styles -->
     <link rel="shortcut icon" href="{{ asset('img/favicon.png') }}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+    <style>
+        .clickable:hover { 
+            cursor: pointer;
+        } 
+    </style>
 </head>
 <body>
     <nav class="navbar sticky-top navbar-expand-lg bg-dark navbar-dark">
@@ -42,35 +48,31 @@
         </div>
     </nav>
     <div class="container m-con">
-        <h1 class="mb-3">Search Result</h1>
+        <h1 class="mb-3">My Answers</h1>
 
         <table class="table table-striped table-hover table-sm table-bordered bg-light">
         <thead>
             <tr>
-                <th>Title</th>
-                <th>Posted by</th>
-                <th>Posted at</th>
+                <th>Question Title</th>
+                <th>Answer</th>
+                <th>Posted/Last edited at</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
-            @if($questions->isEmpty())
-                <tr ><td colspan="4">Sorry, no matches data found</td></tr>
-            @else
-                @foreach($questions as $question)
-                <tr>
-                    <td>{{ $question->title }}</td>
-                    <td>{{ $question->username}}</td>
-                    <td>{{ $question->created_at }}</td>
-                    <td>
-                        <a href="{{ route('view' , $question->id)}}"><i class='fa fa-eye'></i> </a>
-                    </td>
-                </tr>
-                @endforeach
-            @endif
+            @foreach($answers as $answer)
+            <tr class="clickable" onclick="window.location='{{ route('view' , $answer->id_query)}}'">
+                <td>{{ $answer->question }}</td>
+                <td>{{ $answer->body }}</td>
+                <td>{{ $answer->updated_at }}</td>
+                <td>
+                    <a href="{{ route('view' , $answer->id_query)}}"><i class='fa fa-eye'></i> </a>
+                    <a href="{{ route('delete_answer', $answer->id) }}"><i class='fa fa-trash'></i></a>
+                </td>
+            </tr>
+            @endforeach
         </tbody>
         </table>
     </div>
-@include('pagination', ['paginator' => $questions])
 </body>
 </html>

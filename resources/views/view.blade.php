@@ -25,34 +25,77 @@
                     <li class="nav-item active"><a class="nav-link" href="{{ route('home') }}">Home</a></li>
                     <li class="nav-item active"><a class="nav-link" href="{{ route('ask') }}">Ask</a></li>
                     <li class="nav-item active"><a class="nav-link" href="{{ route('questions') }}">MyQuest</a></li>
-                    <li class="nav-item active"><a class="nav-link" href="{{ route('logout') }}">Logout</a></li>
+                    <li class="nav-item active"><a class="nav-link" href="{{ route('answers') }}">MyAns</a></li>
                 </ul>
             </div>
-            <form method="GET" action="{{ route('search_question') }}" class="form-inline my-2 my-lg-0 ml-auto">
-                <input class="form-control mr-sm-2" type="text" name="string"  placeholder="Search"> 
-                <button class="btn btn-primary fa fa-search my-2 my-sm-0" type="submit"></button>
-            </form>
+            <div>
+                <div class="d-inline-block">
+                    <form method="GET" action="{{ route('search_question') }}" class="form-inline my-2 my-lg-0 ml-auto">
+                        <input class="form-control mr-sm-2" type="text" name="string"  placeholder="Search"> 
+                        <button class="btn btn-primary fa fa-search my-2 my-sm-0" type="submit"></button>
+                    </form>
+                </div>
+                <div class="d-inline-block">
+                    <a class="nav-link fa fa-sign-out" href="{{ route('logout') }}" style="font-size: 150%;"></a>
+                </div>
+            </div>
         </div>
     </nav>
     <section id="home">
         <div class="container m-con" data-aos="zoom-in" data-aos-delay="100">
-            <h1>Viewed Question</h1>
+            <h1>{{ $question->title }}</h1>
+            <div>
+                <small class="text-muted">By {{ $question->username }}</small>
+                <small>•</small>
+                <small class="text-muted">Posted at {{ $question->created_at }}</small>
+            </div>
+            @if($question->updated_at != $question->created_at)
+            <small class="text-muted">Last edited {{ $question->updated_at }}</small>
+            @endif
             <div class="row">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">{{ $question->title }}</h5>
                         <p class="card-text">{{ $question->body }}</p>
-                        <a class="btn btn-outline-dark float-right fa fa-user"><span class="nunito">  {{ $question->username }}</span></a>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-muted">Posted at {{ $question->created_at }}</small>
                     </div>
                 </div>
             </div>
             
+            <!--Show Answer -->
+            <h3 class="mt-3">Answers</h3>
+            @isset($showanswers)
+                @foreach($showanswers ?? '' as $jawab)
+                <form>
+                <input type="hidden" name="id_query" class="form-control" value="{{ $jawab->id }}">
+                <div class="row">
+                    <div class="card">
+                        <div class="card-body">
+                           
+                            <p class="card-text">{{ $jawab->body }}</p>
+                            @if( Session::get('username') == $jawab->username)
+                            <a href="{{ route('edit_answer',['id'=> $jawab->id, 'id_query'=> $jawab->id_query]) }}"><i class='fa fa-pencil'></i></a>
+                            <a href="{{ route('delete_answer', $jawab->id) }}"><i class='fa fa-trash'></i></a>
+                            @endif
+                        </div>
+                        <div class="card-footer">
+                            <div>
+                                <small class="text-muted">By {{ $jawab->username }}</small>
+                                <small>•</small>
+                                <small class="text-muted">Posted at {{ $jawab->created_at }}</small>
+                            </div>
+                            @if($jawab->updated_at != $jawab->created_at)
+                            <div>
+                                <small class="text-muted">Last edited {{ $question->updated_at }}</small>
+                            </div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                </form>
+              @endforeach
+            @endisset
         </div>
         
-        <h2>Answer</h2>
+        <h2>Add Answer</h2>
         <form method="POST" action="{{ isset($answer)? route('edit_answer') : route('add_answer') }}" class="form">
         
         @csrf
@@ -70,30 +113,6 @@
          <input type="submit" value="Submit Answer">
          
         </form> 
-        <!--Show Answer -->
-        <h1>Show Answer</h1>
-       @isset($showanswers)
-            @foreach($showanswers ?? '' as $jawab)
-            <form>
-            <input type="hidden" name="id_query" class="form-control" value="{{ $jawab->id }}">
-            <div class="row">
-                <div class="card">
-                    <div class="card-body">
-                       
-                        <p class="card-text">{{ $jawab->body }}</p>
-                        <a class="btn btn-outline-dark float-right fa fa-user"><span class="nunito">  {{ $jawab->username }}</span></a>
-                       <a href="{{ route('edit_answer',['id'=> $jawab->id, 'id_query'=> $jawab->id_query]) }}"><i class='fa fa-pencil'></i></a>
-                        <a href="{{ route('delete_answer', $jawab->id) }}"><i class='fa fa-trash'></i></a>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-muted">Post on {{ $jawab->created_at }}</small>
-                        
-                    </div>
-                </div>
-            </div>
-            </form>
-          @endforeach
-            @endisset
 
     </section>
 </body>

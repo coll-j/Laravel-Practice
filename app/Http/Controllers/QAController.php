@@ -10,14 +10,25 @@ use App\Answers;
 class QAController extends Controller
 {
     public function show ($id) {
-        $flag = Questions::where('id', $id)->get();
-        return view('view', compact('flag'));
-    }
+        $question = Questions::where('id', $id)->first();
+        $showanswers = Answers::where('id_query', $question->id)->get();
+         return view('view',compact('question','showanswers'));
+    } 
 
     public function userQuestions () {
         $username = session()->get('username');
         $questions = Questions::where('username', $username)->orderBy('created_at', 'desc')->get();
         return view('questions', compact('questions'));
+    }
+
+    public function userAnswers () {
+        $username = session()->get('username');
+        $answers = Answers::where('username', $username)->orderBy('updated_at', 'desc')->get();
+        foreach($answers as $answer)
+        {
+            $answer['question'] = Questions::find($answer->id_query)->title;
+        }
+        return view('answers', compact('answers'));
     }
 
     public function allQuestions() {
@@ -71,7 +82,7 @@ class QAController extends Controller
             'title' => $request->title,
             'body' => $request->body
         ]);
-        return view('home');
+        return redirect()->route('questions');
     }
 
     public function deleteQuestion (Request $request)
@@ -80,11 +91,5 @@ class QAController extends Controller
         return redirect()->back();
     }
 
-    public function show ($id) {
-        $question = Questions::where('id', $id)->first();
-        $showanswers = Answers::where('id_query', $question->id)->get();
-         return view('view',compact('question','showanswers'));
-     } 
 
- 
 }
