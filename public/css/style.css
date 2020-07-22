@@ -16,10 +16,6 @@ html, body {
   height: 100vh;
 }
 
-#home {
-  margin-bottom: 60px;
-}
-
 /* ------------------------------------------------------------------- 
  * Navigation Bar
  * ------------------------------------------------------------------- */
@@ -57,6 +53,26 @@ nav .nav-item a:hover, nav .nav-item a:focus {
   min-width: 100%;
 }
 
+.fa {
+  color: #c0c0c0;
+}
+
+.fa:hover {
+  color: #007bff;
+}
+
+.table tbody tr:hover td, .table tbody tr:hover th {
+  background-color: #dcedff;
+}
+
+td {
+  overflow: hidden;
+}
+
+table td {
+  font-size: small;
+  padding: 10px; 
+}
 /* ------------------------------------------------------------------- 
  * Title & Font
  * ------------------------------------------------------------------- */
@@ -143,3 +159,9 @@ nav .nav-item a:hover, nav .nav-item a:focus {
 .btn {
   margin-bottom: 10px;
 }
+
+.row {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+

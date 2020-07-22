@@ -63,14 +63,14 @@
 
     <!-- <div class="header-bg"></div> -->
     <section id="home">
-        <div class="container m-con" data-aos="zoom-in" data-aos-delay="100">
+        <div class="container mt-3" data-aos="zoom-in" data-aos-delay="100">
             <h1>Home</h1>
             @foreach($questions ?? '' as $question)
             <div class="row">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">{{ $question->title }}</h5>
-                        <p class="card-text">{{ $question->body }}</p>
+                        <!-- <p class="card-text">{{ $question->body }}</p> -->
                         <a href="{{ route('view' , $question->id)}}" class="btn btn-primary float-right stretched-link">View</a>
                     </div>
                     <div class="card-footer">

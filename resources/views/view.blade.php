@@ -52,15 +52,7 @@
     </nav>
     <section id="home">
         <div class="container m-con" data-aos="zoom-in" data-aos-delay="100">
-            <h1>{{ $question->title }}</h1>
-            <div>
-                <small class="text-muted">By {{ $question->username }}</small>
-                <small>•</small>
-                <small class="text-muted">Posted at {{ $question->created_at }}</small>
-            </div>
-            @if($question->updated_at != $question->created_at)
-            <small class="text-muted">Last edited {{ $question->updated_at }}</small>
-            @endif
+            <h2>{{ $question->title }}</h2>
             <div class="row">
                 <div class="card">
                     <div class="card-body">
@@ -68,10 +60,19 @@
                     </div>
                 </div>
             </div>
+            <div class="text-right">
+                <small class="text-muted">By {{ $question->username }}</small>
+                <small class="text-muted"> • Asked {{ $question->created_at }}</small>
+                @if($question->updated_at != $question->created_at)
+                    <small class="text-muted"> •  Last edited {{ $question->updated_at }}</small>
+                @endif
+            </div>
             
             <!--Show Answer -->
-            <h3 class="mt-3">Answers</h3>
             @isset($showanswers)
+                @if(!($showanswers->isEmpty())) 
+                    <h3 class="mt-3">Answers</h3>
+                @endif
                 @foreach($showanswers ?? '' as $jawab)
                 <form>
                 <input type="hidden" name="id_query" class="form-control" value="{{ $jawab->id }}">
@@ -106,27 +107,45 @@
                 </form>
               @endforeach
             @endisset
-        </div>
-        
-        <h2>Add Answer</h2>
-        <form method="POST" action="{{ isset($answer)? route('edit_answer') : route('add_answer') }}" class="form">
-        
-        @csrf
-       
-        <div class="form-group">
-            
-            <input type="hidden" name="id_query" class="form-control" value="{{ $question->id }}">
-        </div>
-       
-        <div class="form-group">
-            <input type="hidden" name="username" class="form-control" value="{{ Session::get('username') }}">
-        </div>
-        
-        <textarea rows="6" name="body" class="form-control" >{{ $answers->body ?? ''}}</textarea>
-         <input type="submit" value="Submit Answer">
-         
-        </form> 
 
+            <br>
+            <h4>Add Answer</h4>
+            <form method="POST" action="{{ isset($answer)? route('edit_answer') : route('add_answer') }}" class="form">
+                @csrf
+                <div class="form-group"> 
+                    <input type="hidden" name="id_query" class="form-control" value="{{ $question->id }}">
+                </div>
+                <div class="form-group">
+                    <input type="hidden" name="username" class="form-control" value="{{ Session::get('username') }}">
+                </div>
+                <textarea rows="6" name="body" class="form-control" required>{{ $answers->body ?? ''}}</textarea>
+                <input type="submit" name="submit" value="Submit Answer" class="mt-1 btn btn-primary"/> 
+            </form> 
+
+
+            <!--<button onclick="myFunction()">Try it</button> -->
+
+        </div>
+        
+        <!-- <script>
+        function myFunction() {
+            var x = document.getElementById('box-answer');
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+        function closeBox() {
+            var x = document.getElementById('box-answer');
+            var y = document.getElementById('close-icon');
+            if (!(x.style.display === "none")) {
+                x.style.display = "none";
+                y.classList.remove('fa-close');
+            }
+        }
+        </script> -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     </section>
 </body>
 </html>

@@ -27,7 +27,7 @@
                 
                 <hr>
                 @if(session('alert'))
-                <small class="mb-2">{{ session('alert') }}</small>
+                <small class="mb-2" style="color: red;">{{ session('alert') }}</small>
                 @endif
                 <form method="POST" action="{{ isset($username)? route('update_pass') : route('find_user') }}">
                     @csrf
