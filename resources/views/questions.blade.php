@@ -50,20 +50,20 @@
     <div class="container m-con">
         <h1 class="mb-3">My Questions</h1>
 
-        <table class="table table-striped table-hover table-sm table-bordered bg-light">
-        <thead>
+        <table class="table table-hover table-sm">
+        <thead class="bg-light">
             <tr>
                 <th>Title</th>
-                <th>Time</th>
+                <th>Posted / Edited at</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
             @foreach($questions as $question)
             <tr class="clickable" onclick="window.location='{{ route('view' , $question->id)}}'">
-                <td>{{ $question->title }}</td>
-                <td>{{ $question->created_at }}</td>
-                <td>
+                <td style="width:70%">{{ $question->title }}</td>
+                <td style="width:23%">{{ $question->created_at }}</td>
+                <td style="width:7%">
                     <a href="{{ route('view' , $question->id)}}"><i class='fa fa-eye'></i> </a>
                     <a href="{{ route('edit_question', $question->id) }}"><i class='fa fa-pencil'></i></a>
                     <a href="{{ route('delete_question', $question->id) }}"><i class='fa fa-trash'></i></a>

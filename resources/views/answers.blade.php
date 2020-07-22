@@ -50,22 +50,22 @@
     <div class="container m-con">
         <h1 class="mb-3">My Answers</h1>
 
-        <table class="table table-striped table-hover table-sm table-bordered bg-light">
-        <thead>
+        <table class="table table-hover table-sm">
+        <thead class="bg-light">
             <tr>
                 <th>Question Title</th>
                 <th>Answer</th>
-                <th>Posted/Last edited at</th>
+                <th>Posted / Edited at</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
             @foreach($answers as $answer)
             <tr class="clickable" onclick="window.location='{{ route('view' , $answer->id_query)}}'">
-                <td>{{ $answer->question }}</td>
-                <td>{{ $answer->body }}</td>
-                <td>{{ $answer->updated_at }}</td>
-                <td>
+                <td style="width:25%">{{ $answer->question }}</td>
+                <td style="width:45%">{{ $answer->body }}</td>
+                <td style="width:23%">{{ $answer->updated_at }}</td>
+                <td style="width:7%">
                     <a href="{{ route('view' , $answer->id_query)}}"><i class='fa fa-eye'></i> </a>
                     <a href="{{ route('delete_answer', $answer->id) }}"><i class='fa fa-trash'></i></a>
                 </td>
