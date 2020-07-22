@@ -10,6 +10,15 @@
     <!-- Styles -->
     <link rel="shortcut icon" href="{{ asset('img/favicon.png') }}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+    <style>
+    input[readonly].no-border:focus{
+    background-color:transparent;
+    border: 0;
+    font-size: 1em;
+    outline: none;
+    }
+    </style>
 </head>
 <body>
     <nav class="navbar sticky-top navbar-expand-lg bg-dark navbar-dark">
@@ -69,10 +78,14 @@
                 <div class="row">
                     <div class="card">
                         <div class="card-body">
-                           
-                            <p class="card-text">{{ $jawab->body }}</p>
+                        <form method="POST" action="{{ route('login') }}">
+                            @csrf
+                            <input type="text" class="form-control-plaintext no-border mb-2" name="body" value="{{ $jawab->body }}" readonly />
+                            <br>
+                        </form>
                             @if( Session::get('username') == $jawab->username)
-                            <a href="{{ route('edit_answer',['id'=> $jawab->id, 'id_query'=> $jawab->id_query]) }}"><i class='fa fa-pencil'></i></a>
+                            <!-- <a href="{{ route('edit_answer',['id'=> $jawab->id, 'id_query'=> $jawab->id_query]) }}"><i class='fa fa-pencil'></i></a> -->
+                            <button type="button" class="btn btn-link" onclick=""><i class='fa fa-pencil'></i></button>
                             <a href="{{ route('delete_answer', $jawab->id) }}"><i class='fa fa-trash'></i></a>
                             @endif
                         </div>
