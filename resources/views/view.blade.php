@@ -28,13 +28,18 @@
     <div class="modal fade in" id="edit-button" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-body">
-                        Are you sure to delete this question?
-                    </div>
-                    <div class="modal-footer p-1">
-                        <button type="button" class="btn btn-secondary m-1" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary m-1">Save</button>
-                    </div>
+                    <form method="POST" action="{{ route('delete_question') }}">
+                        @csrf
+                        @method('DELETE')
+                        <input type="hidden" name="id" value="{{ $question->id }}">
+                        <div class="modal-body">
+                            Are you sure to delete this question?
+                        </div>
+                        <div class="modal-footer p-1">
+                            <button type="button" class="btn btn-secondary m-1" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-danger m-1">Delete</button>
+                        </div>
+                    </form>
                 </div>
             </div>
     </div>
@@ -76,7 +81,7 @@
                 <input type="hidden" name="id" value="{{ $question->id }}">
                 <input type="text" name="title" class="form-control-plaintext no-border h2" value="{{ $question->title }}" disabled>
                 <button type="button" class="btn btn-link " onclick="toggleForm(this)"><i class='fa fa-pencil'></i></button>
-                <button type="button" class="btn btn-link" data-toggle="modal" data-target="#edit-button" id="edit-button"><i class='fa fa-trash'></i></button>
+                <button type="button" class="btn btn-link" data-toggle="modal" data-target="#edit-button"><i class='fa fa-trash'></i></button>
                 <!-- <div class="row"> -->
                     <div class="card">
                         <div class="card-body">

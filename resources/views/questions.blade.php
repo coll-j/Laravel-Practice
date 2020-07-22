@@ -10,6 +10,8 @@
     <!-- Styles -->
     <link rel="shortcut icon" href="{{ asset('img/favicon.png') }}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
     <style>
         .clickable:hover { 
@@ -18,6 +20,26 @@
     </style>
 </head>
 <body>
+    <!-- Modal delete question -->
+    <div class="modal fade in" id="edit-button" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form method="POST" action="{{ route('delete_question') }}">
+                        @csrf
+                        @method('DELETE')
+                        <input type="hidden" name="id" id="modal-id">
+                        <div class="modal-body">
+                            Are you sure to delete this question?
+                        </div>
+                        <div class="modal-footer p-1">
+                            <button type="button" class="btn btn-secondary m-1" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-danger m-1">Delete</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+    </div>
+    <!-- End Modal -->
     <nav class="navbar sticky-top navbar-expand-lg bg-dark navbar-dark">
 		<div class="container">
             <a class="navbar-brand text-white">Questioner</a>
@@ -60,18 +82,24 @@
         </thead>
         <tbody>
             @foreach($questions as $question)
-            <tr class="clickable" onclick="window.location='{{ route('view' , $question->id)}}'">
-                <td style="width:70%">{{ $question->title }}</td>
-                <td style="width:23%">{{ $question->created_at }}</td>
+            <tr>
+                <td style="width:70%" class="clickable" onclick="window.location='{{ route('view' , $question->id)}}'">{{ $question->title }}</td>
+                <td style="width:23%" class="clickable" onclick="window.location='{{ route('view' , $question->id)}}'">{{ $question->created_at }}</td>
                 <td style="width:7%">
                     <a href="{{ route('view' , $question->id)}}"><i class='fa fa-eye'></i> </a>
                     <a href="{{ route('edit_question', $question->id) }}"><i class='fa fa-pencil'></i></a>
-                    <a href="{{ route('delete_question', $question->id) }}"><i class='fa fa-trash'></i></a>
+                    <a href="#" onclick="changeModalId({{ $question->id }})" data-toggle="modal" data-target="#edit-button"><i class='fa fa-trash'></i></a>
                 </td>
             </tr>
             @endforeach
         </tbody>
         </table>
     </div>
+
+    <script>
+        function changeModalId(id){
+            document.getElementById('modal-id').value = id;
+        }
+    </script>
 </body>
 </html>
