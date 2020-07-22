@@ -82,7 +82,8 @@ class QAController extends Controller
             'title' => $request->title,
             'body' => $request->body
         ]);
-        return redirect()->route('questions');
+        // return redirect()->route('questions');
+        return redirect()->route('view', ['id' => $request->id]);
     }
 
     public function deleteQuestion (Request $request)

@@ -52,14 +52,21 @@
     </nav>
     <section id="home">
         <div class="container m-con" data-aos="zoom-in" data-aos-delay="100">
-            <h2>{{ $question->title }}</h2>
-            <div class="row">
-                <div class="card">
-                    <div class="card-body">
-                        <p class="card-text">{{ $question->body }}</p>
+            <form method="POST" action="{{ route('update_question') }}">
+                @csrf
+                @method('PUT')
+                <input type="hidden" name="id" value="{{ $question->id }}">
+                <input type="text" name="title" class="form-control-plaintext no-border h2" value="{{ $question->title }}" disabled>
+                <button type="button" class="btn btn-link " onclick="toggleForm(this)"><i class='fa fa-pencil'></i></button>
+                <!-- <div class="row"> -->
+                    <div class="card">
+                        <div class="card-body">
+                            <textarea type="text" name="body" class="form-control-plaintext" rows="6" style="resize: none;" disabled>{{ $question->body }}</textarea>
+                        </div>
                     </div>
-                </div>
-            </div>
+                <!-- </div> -->
+                <input type="hidden" class="btn btn-primary" value="Save">
+            </form>
             <div class="text-right">
                 <small class="text-muted">By {{ $question->username }}</small>
                 <small class="text-muted"> • Asked {{ $question->created_at }}</small>
@@ -127,24 +134,49 @@
 
         </div>
         
-        <!-- <script>
-        function myFunction() {
-            var x = document.getElementById('box-answer');
-            if (x.style.display === "none") {
-                x.style.display = "block";
-            } else {
-                x.style.display = "none";
+        <script>
+            function toggleForm(element){
+                var parent = element.parentElement;
+                var children = parent.elements;
+                for(let i = 0; i < children.length; i++)
+                {
+                    if(children[i].hasAttribute("disabled"))
+                    {
+                        var temp;
+                        if(children[i].classList.contains("card"))
+                        {
+                            temp = children[i].elements[0].elements[0];
+                        }
+                        else temp = children[i];
+                        temp.removeAttribute("disabled");
+                        temp.classList.remove("form-control-plaintext");
+                        temp.classList.remove("no-border");
+                        temp.classList.add("form-control");
+                    }
+                    if(children[i].type == "hidden" && children[i].classList.contains("btn"))
+                    {
+                        children[i].type = "submit";
+                    }
+                }
+                console.log(children);
             }
-        }
-        function closeBox() {
-            var x = document.getElementById('box-answer');
-            var y = document.getElementById('close-icon');
-            if (!(x.style.display === "none")) {
-                x.style.display = "none";
-                y.classList.remove('fa-close');
-            }
-        }
-        </script> -->
+        // function myFunction() {
+        //     var x = document.getElementById('box-answer');
+        //     if (x.style.display === "none") {
+        //         x.style.display = "block";
+        //     } else {
+        //         x.style.display = "none";
+        //     }
+        // }
+        // function closeBox() {
+        //     var x = document.getElementById('box-answer');
+        //     var y = document.getElementById('close-icon');
+        //     if (!(x.style.display === "none")) {
+        //         x.style.display = "none";
+        //         y.classList.remove('fa-close');
+        //     }
+        // }
+        </script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     </section>
 </body>
