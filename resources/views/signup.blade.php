@@ -28,6 +28,7 @@
                     <br>
                     <input type="submit" name="submit" value="Sign up" class="col btn btn-primary"/> 
                 </form>
+                <div class="col-form-label">Have an account? <a href="{{ route('/') }}"><b>Sign in</b></a></div>
             </div>
         </div>
     </body>

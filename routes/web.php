@@ -16,7 +16,7 @@ use Symfony\Component\Console\Question\Question;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('/');
 
 Route::get('sign_up', function () {
     return view('signup');

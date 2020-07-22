@@ -21,6 +21,27 @@
     </style>
 </head>
 <body>
+    <!-- Modal EDIT -->
+    <div class="modal" id="edit-button" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit section</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        //model body
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </div>
+    </div>
+    <!-- End Modal edit -->
     <nav class="navbar sticky-top navbar-expand-lg bg-dark navbar-dark">
 		<div class="container">
             <a class="navbar-brand text-white">Questioner</a>
@@ -58,6 +79,7 @@
                 <input type="hidden" name="id" value="{{ $question->id }}">
                 <input type="text" name="title" class="form-control-plaintext no-border h2" value="{{ $question->title }}" disabled>
                 <button type="button" class="btn btn-link " onclick="toggleForm(this)"><i class='fa fa-pencil'></i></button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit-button" id="edit-button">Delete</button>
                 <!-- <div class="row"> -->
                     <div class="card">
                         <div class="card-body">
@@ -133,7 +155,9 @@
             <!--<button onclick="myFunction()">Try it</button> -->
 
         </div>
-        
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
         <script>
             function toggleForm(element){
                 var parent = element.parentElement;

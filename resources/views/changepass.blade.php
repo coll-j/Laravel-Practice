@@ -47,6 +47,11 @@
                     <br>
                     <input type="submit" name="submit" value="Submit" class="col btn btn-primary"/> 
                 </form>
+                <div class="col-form-label">
+                    Suddenly remember your password<br> because you're impulsive af? <a href="{{ route('/') }}"><b>Sign in</b></a>
+                    <br>
+                    Don't have an account? <a href="{{ route('sign_up') }}"><b>Sign up</b></a>
+                </div>
             </div>
         </div>
 
