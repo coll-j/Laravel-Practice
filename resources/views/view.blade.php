@@ -90,6 +90,7 @@
                 <div class="card">
                     <div class="card-body">
                         <textarea type="text" name="body" class="form-control-plaintext" id="story" disabled>{{ $question->body }}</textarea>
+                        
                     </div>
                 </div>
                 <input type="hidden" class="mt-1 btn btn-primary" value="Save">
@@ -117,6 +118,7 @@
                     <a type="button" class="btn" onclick="toggleForm(this)"><i class='fa fa-pencil'></i></a>
                     <a href="#" class="btn" onclick="changeModalId({{ $jawab->id }})" data-toggle="modal" data-target="#delete-question"><i class='fa fa-trash'></i></a>
                     @endif
+                   
                     <div class="card">
                         <div class="card-body">
                             <textarea id="story" type="text" name="body" class="form-control-plaintext" disabled>{{ $jawab->body }}</textarea>

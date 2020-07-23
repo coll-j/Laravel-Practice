@@ -6,10 +6,12 @@
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Nunito" />
     <link rel="stylesheet" href="{{asset('css/style.css')}}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   
 
     <!-- Styles -->
     <link rel="shortcut icon" href="{{ asset('img/favicon.png') }}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
     <style>
         .stretched-link::after {
@@ -28,6 +30,18 @@
             background-color: lightgrey;
             cursor: pointer;
         }
+        
+        body,h1 {font-family: "Raleway", sans-serif}
+        body, html {height: 100%}
+        .bgimg {
+         min-height: 100%;
+         background-position: center;
+         background-size: cover;
+         width:100%;
+         filter: brightness(50%)
+         
+        }
+       
     </style>
 </head>
 <body>
@@ -62,29 +76,46 @@
     </nav>
 
     <!-- <div class="header-bg"></div> -->
-    <section id="home">
-        <div class="container mt-3" data-aos="zoom-in" data-aos-delay="100">
-            <h1>Home</h1>
+    
+            <!--If question is empty -->
             @if($questions->isEmpty())
-            <h2>Hai, {{ Session::get('username') }}, let ask!</h2>
-            <a href="\ask" class="btn btn-primary">Ask</a>
-            @endif
-            @foreach($questions ?? '' as $question)
-            <div class="row">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ $question->title }}</h5>
-                        <!-- <p class="card-text">{{ $question->body }}</p> -->
-                        <a href="{{ route('view' , $question->id)}}" class="btn btn-primary float-right stretched-link">View</a>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-muted">By {{ $question->username }}</small>
-                        <small>•</small>
-                        <small class="text-muted">Posted at {{ $question->created_at }}</small>
+
+             <div class="w3-display-container w3-animate-opacity w3-text-white">
+             <img src="{{URL::asset('img/home.png')}}" class ="bgimg w3-display-container w3-animate-opacity w3-text-white">
+            <div class="w3-display-middle">
+            
+             <h1 class="w3-jumbo w3-animate-top">Welcome, {{ Session::get('username') }}</h1>
+             <hr class="w3-border-grey" style="margin:auto;width:40%">
+             <p class="w3-large w3-center">Ask any Question</p>
+             <div style="text-align:center;">
+             <a href="\ask" class="btn btn-light"><b>Ask</b></a>
+            </div>
+            </div>
+           
+            </div>
+            @else
+            <section id="home">
+            <div class="container mt-3" data-aos="zoom-in" data-aos-delay="100">
+                <h1>Home</h1>
+                @foreach($questions ?? '' as $question)
+                <div class="row">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ $question->title }}</h5>
+                            <!-- <p class="card-text">{{ $question->body }}</p> -->
+                            <a href="{{ route('view' , $question->id)}}" class="btn btn-primary float-right stretched-link">View</a>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">By {{ $question->username }}</small>
+                            <small>•</small>
+                            <small class="text-muted">Posted at {{ $question->created_at }}</small>
+                        </div>
                     </div>
                 </div>
+                @endforeach
             </div>
-            @endforeach
+            @endif
+
         </div>
     </section>
     @include('pagination', ['paginator' => $questions ?? ''])

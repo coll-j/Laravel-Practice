@@ -87,6 +87,8 @@ class QAController extends Controller
     public function deleteQuestion (Request $request)
     {
         $question = Questions::find($request->id);
+        Answers::where('id_query', $question->id)->delete();
+        $question->delete();
         return redirect()->route('questions');
     }
 

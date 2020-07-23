@@ -59,7 +59,7 @@
                 <div class="form-group">
                     <label>Title</label><br>
                     <small class="less">Be specific and imagine you’re asking a question to another person</small>
-                    <input type="text" name="title" class="form-control" value="{{ $question->title ?? ''}}">
+                    <input type="text" name="title" class="form-control" value="{{ $question->title ?? ''}}" autocomplete="off">
                 </div>
                 <div class="form-group">
                     <label>Body</label><br>
