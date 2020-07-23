@@ -75,12 +75,15 @@
         <table class="table table-hover table-sm">
         <thead class="bg-light">
             <tr>
-                <th>Title</th>
-                <th>Posted / Edited at</th>
-                <th>Action</th>
+                <th style="width:70%">Title</th>
+                <th style="width:23%">Posted / Edited at</th>
+                <th style="width:7%">Action</th>
             </tr>
         </thead>
         <tbody>
+            @if($questions->isEmpty())
+                <tr><td colspan="4" class="bg-light">Never asked</td></tr>
+            @endif
             @foreach($questions as $question)
             <tr>
                 <td style="width:70%" class="clickable" onclick="window.location='{{ route('view' , $question->id)}}'">{{ $question->title }}</td>
