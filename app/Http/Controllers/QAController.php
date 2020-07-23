@@ -11,8 +11,9 @@ class QAController extends Controller
 {
     public function show ($id) {
         $question = Questions::where('id', $id)->first();
-        $showanswers = Answers::where('id_query', $question->id)->get();
-         return view('view',compact('question','showanswers'));
+        $showanswers = Answers::where('id_query', $question->id)->orderBy('approved', 'desc')->orderBy('created_at', 'asc')->get();
+        $approved = (!Answers::where(['id_query' => $question->id, 'approved' => 1])->get()->isEmpty()) ? 1 : 0;
+        return view('view',compact('question', 'showanswers', 'approved'));
     } 
 
     public function userQuestions () {
@@ -71,6 +72,13 @@ class QAController extends Controller
         return redirect()->back();
     }
 
+    public function editAnswerApprove (Request $request) {
+        Answers::find($request->id)->update([
+            'approved' => $request->approve
+        ]);
+        return redirect()->route('view', ['id' => $request->id_query]);
+    }
+
     public function editQuestion ($id) {
         $question = Questions::find($id);
         return view('ask', compact('question'));
@@ -83,6 +91,7 @@ class QAController extends Controller
         ]);
         return redirect()->route('view', ['id' => $request->id]);
     }
+
 
     public function deleteQuestion (Request $request)
     {

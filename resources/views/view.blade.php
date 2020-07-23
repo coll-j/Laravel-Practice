@@ -119,12 +119,19 @@
                     <a href="#" class="btn" onclick="changeModalId({{ $jawab->id }})" data-toggle="modal" data-target="#delete-question"><i class='fa fa-trash'></i></a>
                     @endif
                    
+                    @if($jawab->approved == 1)
+                    <div class="card border-success">
+                    @else
                     <div class="card">
+                    @endif
                         <div class="card-body">
+                            @if($jawab->approved == 1)
+                            <p class="text-success">&#10004 Approved</p>
+                            @endif
                             <textarea id="story" type="text" name="body" class="form-control-plaintext" disabled>{{ $jawab->body }}</textarea>
                         </div>
                         <div class="card-footer">
-                            <div>
+                            <div class="d-inline">
                                 <small class="text-muted">By {{ $jawab->username }}</small>
                                 <small>•</small>
                                 <small class="text-muted">Posted at {{ $jawab->created_at }}</small>
@@ -133,11 +140,27 @@
                                     <small class="text-muted">Last edited {{ $jawab->updated_at }}</small>
                                 @endif
                             </div>
+                            <div class="float-right d-inline">
+                                @if( Session::get('username') == $question->username)
+                                    @if($approved == 1)
+                                        @if($jawab->approved == 1)
+                                        <button type="button" class="btn btn-danger btn-sm m-0" onclick="updateApprove({{ $jawab->id }}, 0, {{ $jawab->id_query }})">Cancel approve</button>
+                                        @endif
+                                    @else
+                                    <button type="button" class="btn btn-success btn-sm m-0" onclick="updateApprove({{ $jawab->id }}, 1, {{ $jawab->id_query }})">Approve</button>
+                                    @endif
+                                @endif
+                            </div>
                         </div>
                     </div>
                     <input type="hidden" class="mt-1 btn btn-primary" value="Save">
                 </form>
             @endforeach
+            <form method="POST" action="{{ route('update_approve') }}" id="update-answer">
+            @csrf
+            @method('PUT')
+
+            </form>
             @endisset
 
             <br>
@@ -161,6 +184,31 @@
             document.addEventListener('DOMContentLoaded', function() {
                 autosize(document.querySelectorAll('#story'));
             }, false);
+
+            function updateApprove(id, flag, id_query) {
+                var form = document.getElementById('update-answer');
+
+                var element1 = document.createElement("input"); 
+                var element2 = document.createElement("input");
+                var element3 = document.createElement("input");
+
+                element1.value=id;
+                element1.name="id";
+                element1.type="hidden";
+                form.appendChild(element1);
+
+                element2.value=flag;
+                element2.name="approve";
+                element2.type="hidden";
+                form.appendChild(element2);
+
+                element3.value=id_query;
+                element3.name="id_query";
+                element3.type="hidden";
+                form.appendChild(element3);
+
+                form.submit();
+            }
 
             /* Edit Toggle */
             function toggleForm(element){
