@@ -40,6 +40,7 @@ Route::delete('delete_question','QAController@deleteQuestion')->name('delete_que
 
 Route::put('update_pass','UserController@updatePassword')->name('update_pass');
 Route::put('update_question', 'QAController@editPutQuestion')->name('update_question');
+Route::put('update_answer', 'QAController@editPutAnswer')->name('update_answer');
 
 Route::get('logout', 'UserController@logout')->name('logout');
 Route::get('questions', 'QAController@userQuestions')->name('questions');

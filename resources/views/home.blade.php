@@ -65,6 +65,10 @@
     <section id="home">
         <div class="container mt-3" data-aos="zoom-in" data-aos-delay="100">
             <h1>Home</h1>
+            @if($questions->isEmpty())
+            <h2>Hai, {{ Session::get('username') }}, let ask!</h2>
+            <a href="\ask" class="btn btn-primary">Ask</a>
+            @endif
             @foreach($questions ?? '' as $question)
             <div class="row">
                 <div class="card">

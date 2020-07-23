@@ -24,8 +24,7 @@ class QAController extends Controller
     public function userAnswers () {
         $username = session()->get('username');
         $answers = Answers::where('username', $username)->orderBy('updated_at', 'desc')->get();
-        foreach($answers as $answer)
-        {
+        foreach($answers as $answer){
             $answer['question'] = Questions::find($answer->id_query)->title;
         }
         return view('answers', compact('answers'));
@@ -82,15 +81,21 @@ class QAController extends Controller
             'title' => $request->title,
             'body' => $request->body
         ]);
-        // return redirect()->route('questions');
         return redirect()->route('view', ['id' => $request->id]);
     }
 
     public function deleteQuestion (Request $request)
     {
-        Questions::find($request->id)->delete();
-        return redirect()->route('questions');
+        Questions::find($request->id)->delete($request->id);
+        return redirect()->back();
     }
 
+       public function editPutAnswer (Request $request) {
+        Answers::find($request->id)->update([
+            'id_query' => $request->id_query,
+            'body' => $request->body
+        ]);
+        return redirect()->route('view', ['id' => $request->id_query]);
+    }
 
 }

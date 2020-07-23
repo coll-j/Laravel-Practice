@@ -10,9 +10,10 @@
     <!-- Styles -->
     <link rel="shortcut icon" href="{{ asset('img/favicon.png') }}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/autosize.js/4.0.2/autosize.min.js"></script>
+    
     <style>
     input[readonly].no-border:focus{
     background-color:transparent;
@@ -25,23 +26,23 @@
 </head>
 <body>
     <!-- Modal delete question -->
-    <div class="modal fade in" id="edit-button" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <form method="POST" action="{{ route('delete_question') }}">
-                        @csrf
-                        @method('DELETE')
-                        <input type="hidden" name="id" value="{{ $question->id }}">
-                        <div class="modal-body">
-                            Are you sure to delete this question?
-                        </div>
-                        <div class="modal-footer p-1">
-                            <button type="button" class="btn btn-secondary m-1" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-danger m-1">Delete</button>
-                        </div>
-                    </form>
-                </div>
+    <div class="modal fade in" id="delete-question" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form method="POST" action="{{ route('delete_question') }}">
+                    @csrf
+                    @method('DELETE')
+                    <input type="hidden" name="id" value="{{ $question->id }}">
+                    <div class="modal-body">
+                        Are you sure to delete this question?
+                    </div>
+                    <div class="modal-footer p-1">
+                        <button type="button" class="btn btn-secondary m-1" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-danger m-1">Delete</button>
+                    </div>
+                </form>
             </div>
+        </div>
     </div>
     <!-- End Modal -->
     <nav class="navbar sticky-top navbar-expand-lg bg-dark navbar-dark">
@@ -75,21 +76,21 @@
     </nav>
     <section id="home">
         <div class="container m-con" data-aos="zoom-in" data-aos-delay="100">
+
+            <!--Show Question -->
             <form method="POST" action="{{ route('update_question') }}">
                 @csrf
                 @method('PUT')
                 <input type="hidden" name="id" value="{{ $question->id }}">
                 <input type="text" name="title" class="form-control-plaintext no-border h2" value="{{ $question->title }}" disabled>
-                <button type="button" class="btn btn-link " onclick="toggleForm(this)"><i class='fa fa-pencil'></i></button>
-                <button type="button" class="btn btn-link" data-toggle="modal" data-target="#edit-button"><i class='fa fa-trash'></i></button>
-                <!-- <div class="row"> -->
-                    <div class="card">
-                        <div class="card-body">
-                            <textarea type="text" name="body" class="form-control-plaintext" rows="6" style="resize: none;" disabled>{{ $question->body }}</textarea>
-                        </div>
+                <button type="button" class="btn btn-link " onclick="toggleForm(this)"><i class='pull-right fa fa-pencil'></i></button>
+                <button type="button" class="btn btn-link" data-toggle="modal" data-target="#delete-question"><i class='fa fa-trash'></i></button>
+                <div class="card">
+                    <div class="card-body">
+                        <textarea type="text" name="body" class="form-control-plaintext" id="story" disabled>{{ $question->body }}</textarea>
                     </div>
-                <!-- </div> -->
-                <input type="hidden" class="btn btn-primary" value="Save">
+                </div>
+                <input type="hidden" class="mt-1 btn btn-primary" value="Save">
             </form>
             <div class="text-right">
                 <small class="text-muted">By {{ $question->username }}</small>
@@ -98,45 +99,40 @@
                     <small class="text-muted"> •  Last edited {{ $question->updated_at }}</small>
                 @endif
             </div>
-            
+
             <!--Show Answer -->
             @isset($showanswers)
-                @if(!($showanswers->isEmpty())) 
-                    <h3 class="mt-3">Answers</h3>
-                @endif
-                @foreach($showanswers ?? '' as $jawab)
-                <form>
-                <input type="hidden" name="id_query" class="form-control" value="{{ $jawab->id }}">
-                <div class="row">
+            @if(!($showanswers->isEmpty())) 
+                <h3 class="mt-3">Answers</h3>
+            @endif
+            @foreach($showanswers ?? '' as $jawab)
+                <form method="POST" action="{{ route('update_answer') }}" class="mt-3">
+                    @csrf
+                    @method('PUT')
+                    <input type="hidden" name="id" value="{{ $jawab->id }}">
+                    <input type="hidden" name="id_query" value="{{ $question->id }}">
+                    @if( Session::get('username') == $jawab->username)
+                    <a type="button" class="btn" onclick="toggleForm(this)"><i class='fa fa-pencil'></i></a>
+                    <a href="{{ route('delete_answer', $jawab->id) }}" class="btn"><i class='fa fa-trash'></i></a>
+                    @endif
                     <div class="card">
                         <div class="card-body">
-                        <form method="POST" action="{{ route('login') }}">
-                            @csrf
-                            <input type="text" class="form-control-plaintext no-border mb-2" name="body" value="{{ $jawab->body }}" readonly />
-                            <br>
-                        </form>
-                            @if( Session::get('username') == $jawab->username)
-                            <!-- <a href="{{ route('edit_answer',['id'=> $jawab->id, 'id_query'=> $jawab->id_query]) }}"><i class='fa fa-pencil'></i></a> -->
-                            <button type="button" class="btn btn-link" onclick=""><i class='fa fa-pencil'></i></button>
-                            <a href="{{ route('delete_answer', $jawab->id) }}"><i class='fa fa-trash'></i></a>
-                            @endif
+                            <textarea id="story" type="text" name="body" class="form-control-plaintext" disabled>{{ $jawab->body }}</textarea>
                         </div>
                         <div class="card-footer">
                             <div>
                                 <small class="text-muted">By {{ $jawab->username }}</small>
                                 <small>•</small>
                                 <small class="text-muted">Posted at {{ $jawab->created_at }}</small>
+                                @if($jawab->updated_at != $jawab->created_at)
+                                    <small class="text-muted">Last edited {{ $question->updated_at }}</small>
+                                @endif
                             </div>
-                            @if($jawab->updated_at != $jawab->created_at)
-                            <div>
-                                <small class="text-muted">Last edited {{ $question->updated_at }}</small>
-                            </div>
-                            @endif
                         </div>
                     </div>
-                </div>
+                    <input type="hidden" class="mt-1 btn btn-primary" value="Save">
                 </form>
-              @endforeach
+            @endforeach
             @endisset
 
             <br>
@@ -153,12 +149,15 @@
                 <input type="submit" name="submit" value="Submit Answer" class="mt-1 btn btn-primary"/> 
             </form> 
 
-
-            <!--<button onclick="myFunction()">Try it</button> -->
-
         </div>
-
+        
         <script>
+            /* Autosize Size Box Answer & Question */
+            document.addEventListener('DOMContentLoaded', function() {
+                autosize(document.querySelectorAll('#story'));
+            }, false);
+
+            /* Edit Toggle */
             function toggleForm(element){
                 var parent = element.parentElement;
                 var children = parent.elements;
@@ -184,24 +183,7 @@
                 }
                 console.log(children);
             }
-        // function myFunction() {
-        //     var x = document.getElementById('box-answer');
-        //     if (x.style.display === "none") {
-        //         x.style.display = "block";
-        //     } else {
-        //         x.style.display = "none";
-        //     }
-        // }
-        // function closeBox() {
-        //     var x = document.getElementById('box-answer');
-        //     var y = document.getElementById('close-icon');
-        //     if (!(x.style.display === "none")) {
-        //         x.style.display = "none";
-        //         y.classList.remove('fa-close');
-        //     }
-        // }
         </script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     </section>
 </body>
 </html>
