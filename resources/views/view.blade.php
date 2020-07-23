@@ -25,15 +25,15 @@
     </style>
 </head>
 <body>
-    <!-- Modal delete question -->
+    <!-- Modal delete -->
     <div class="modal fade in" id="delete-question" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form method="POST" action="{{ route('delete_question') }}">
+                <form method="POST" action="{{ route('delete_question') }}" id="modal-form">
                     @csrf
                     @method('DELETE')
-                    <input type="hidden" name="id" value="{{ $question->id }}">
-                    <div class="modal-body">
+                    <input type="hidden" name="id" value="{{ $question->id }}" id="modal-id">
+                    <div class="modal-body" id="modal-cont">
                         Are you sure to delete this question?
                     </div>
                     <div class="modal-footer p-1">
@@ -83,8 +83,10 @@
                 @method('PUT')
                 <input type="hidden" name="id" value="{{ $question->id }}">
                 <input type="text" name="title" class="form-control-plaintext no-border h2" value="{{ $question->title }}" disabled>
+                @if( Session::get('username') == $question->username)
                 <button type="button" class="btn btn-link " onclick="toggleForm(this)"><i class='pull-right fa fa-pencil'></i></button>
                 <button type="button" class="btn btn-link" data-toggle="modal" data-target="#delete-question"><i class='fa fa-trash'></i></button>
+                @endif
                 <div class="card">
                     <div class="card-body">
                         <textarea type="text" name="body" class="form-control-plaintext" id="story" disabled>{{ $question->body }}</textarea>
@@ -113,7 +115,7 @@
                     <input type="hidden" name="id_query" value="{{ $question->id }}">
                     @if( Session::get('username') == $jawab->username)
                     <a type="button" class="btn" onclick="toggleForm(this)"><i class='fa fa-pencil'></i></a>
-                    <a href="{{ route('delete_answer', $jawab->id) }}" class="btn"><i class='fa fa-trash'></i></a>
+                    <a href="#" class="btn" onclick="changeModalId({{ $jawab->id }})" data-toggle="modal" data-target="#delete-question"><i class='fa fa-trash'></i></a>
                     @endif
                     <div class="card">
                         <div class="card-body">
@@ -125,7 +127,8 @@
                                 <small>•</small>
                                 <small class="text-muted">Posted at {{ $jawab->created_at }}</small>
                                 @if($jawab->updated_at != $jawab->created_at)
-                                    <small class="text-muted">Last edited {{ $question->updated_at }}</small>
+                                    <small>•</small>
+                                    <small class="text-muted">Last edited {{ $jawab->updated_at }}</small>
                                 @endif
                             </div>
                         </div>
@@ -183,6 +186,12 @@
                 }
                 console.log(children);
             }
+
+            function changeModalId(id){
+                document.getElementById('modal-id').value = id;
+                document.getElementById('modal-form').action = "{{ route('delete_answer') }}";
+                document.getElementById('modal-cont').innerHTML = "Are you sure to delete this answer?";
+            }   
         </script>
     </section>
 </body>

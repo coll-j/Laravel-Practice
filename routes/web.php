@@ -37,6 +37,7 @@ Route::post('login', 'UserController@loginPost')->name('login');
 Route::post('find_user','UserController@changeCheckUser')->name('find_user');
 
 Route::delete('delete_question','QAController@deleteQuestion')->name('delete_question');
+Route::delete('delete_answer','QAController@deleteAnswer')->name('delete_answer');
 
 Route::put('update_pass','UserController@updatePassword')->name('update_pass');
 Route::put('update_question', 'QAController@editPutQuestion')->name('update_question');
@@ -51,4 +52,3 @@ Route::get('edit_answer/{id}/{id_query}', 'QAController@editAnswer')->name('edit
 Route::get('home', 'QAController@allQuestions')->name('home');
 Route::get('search/', 'QAController@filterQuestionsByName')->name('search_question');
 Route::get('view/{id}', 'QAController@show')->name('view');
-Route::get('answers/{id}','QAController@deleteAnswer')->name('delete_answer');
