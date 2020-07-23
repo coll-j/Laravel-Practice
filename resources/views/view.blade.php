@@ -88,6 +88,7 @@
                 <div class="card">
                     <div class="card-body">
                         <textarea type="text" name="body" class="form-control-plaintext" id="story" disabled>{{ $question->body }}</textarea>
+                        
                     </div>
                 </div>
                 <input type="hidden" class="mt-1 btn btn-primary" value="Save">
@@ -112,13 +113,17 @@
                     <input type="hidden" name="id" value="{{ $jawab->id }}">
                     <input type="hidden" name="id_query" value="{{ $question->id }}">
                     @if( Session::get('username') == $jawab->username)
-                    <a type="button" class="btn" onclick="toggleForm(this)"><i class='fa fa-pencil'></i></a>
+                   
+                     <a type="button" class="btn" onclick="toggleForm(this)"><i class='fa fa-pencil'></i></a>
                     <a href="{{ route('delete_answer', $jawab->id) }}" class="btn"><i class='fa fa-trash'></i></a>
                     @endif
+                   
                     <div class="card">
                         <div class="card-body">
                             <textarea id="story" type="text" name="body" class="form-control-plaintext" disabled>{{ $jawab->body }}</textarea>
-                        </div>
+                            
+                     </div>
+                   
                         <div class="card-footer">
                             <div>
                                 <small class="text-muted">By {{ $jawab->username }}</small>
